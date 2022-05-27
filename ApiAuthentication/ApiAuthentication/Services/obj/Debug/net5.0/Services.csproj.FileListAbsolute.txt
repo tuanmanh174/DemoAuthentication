@@ -64,3 +64,4 @@ D:\ApiAuthentication\ApiAuthentication\Services\obj\Debug\net5.0\Services.dll
 D:\ApiAuthentication\ApiAuthentication\Services\obj\Debug\net5.0\ref\Services.dll
 D:\ApiAuthentication\ApiAuthentication\Services\obj\Debug\net5.0\Services.pdb
 D:\ApiAuthentication\ApiAuthentication\Services\obj\Debug\net5.0\Services.genruntimeconfig.cache
+D:\ApiAuthentication\ApiAuthentication\Services\bin\Debug\net5.0\Microsoft.Extensions.Configuration.dll

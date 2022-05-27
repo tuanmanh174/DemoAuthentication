@@ -56,3 +56,4 @@ D:\ApiAuthentication\ApiAuthentication\Repository\obj\Debug\net5.0\Authenticatio
 D:\ApiAuthentication\ApiAuthentication\Repository\obj\Debug\net5.0\ref\AuthenticationRepository.dll
 D:\ApiAuthentication\ApiAuthentication\Repository\obj\Debug\net5.0\AuthenticationRepository.pdb
 D:\ApiAuthentication\ApiAuthentication\Repository\obj\Debug\net5.0\AuthenticationRepository.genruntimeconfig.cache
+D:\ApiAuthentication\ApiAuthentication\Repository\bin\Debug\net5.0\Microsoft.Extensions.Configuration.dll

@@ -2,6 +2,7 @@
 using DataAccess.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,21 @@ using System.Threading.Tasks;
 
 namespace ApiAuthentication.Controller
 {
-    [Produces("application/json")]
     [Route("api/facebook")]
+    [ApiController]
+    //[Produces("application/json")]
+
     public class FacebookController : ControllerBase
     {
         private readonly IFacebookRepository _facebookRepository;
-        public FacebookController(IFacebookRepository facebookRepository)
+        private readonly IConfiguration _configuration;
+        public FacebookController(IFacebookRepository facebookRepository, IConfiguration configuration)
         {
             _facebookRepository = facebookRepository;
+            _configuration = configuration;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         [Route("GetAllFacebook")]
         public IActionResult GetAllFacebook()
@@ -37,20 +42,35 @@ namespace ApiAuthentication.Controller
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        public IActionResult Login(User user)
+        public IActionResult Login([FromBody] User login)
         {
-            if(user.Password == "123456" && user.UserName == "manhdt")
+            IActionResult response = Unauthorized();
+            var user = AuthenticateUser(login);
+            if (user != null)
             {
-                //gọi đến đoạn lấy access token
+                var tokenString = generateJwtToken(user);
+                response = Ok(new { token = tokenString });
             }
-            return Ok();
+            return response;
         }
 
+
+        private User AuthenticateUser(User login)
+        {
+            User user = null;
+            //Validate the User Credentials    
+            //Demo Purpose, I have Passed HardCoded User Information    
+            if (login.UserName == "manhdt")
+            {
+                user = new User { UserName = "Jignesh Trivedi", Password = "123456" };
+            }
+            return user;
+        }
         private string generateJwtToken(User user)
         {
-            // generate token that is valid for 7 days
+
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("");
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("userName", user.UserName.ToString()) }),
